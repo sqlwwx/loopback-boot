@@ -1,5 +1,5 @@
 {
-  "name": "loopback-boot",
+  "name": "loopback-bootnext",
   "version": "2.18.1",
   "description": "Convention-based bootstrapper for LoopBack applications",
   "keywords": [
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/strongloop/loopback-boot"
+    "url": "git+https://github.com/sqlwwx/loopback-boot"
   },
   "main": "index.js",
   "browser": "browser.js",
@@ -21,12 +21,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "async": "~0.9.0",
-    "commondir": "0.0.1",
-    "debug": "^2.0.0",
-    "lodash": "^3.6.0",
-    "semver": "^4.1.0",
-    "toposort": "^0.2.10"
+    "async": "^2.0.0-rc.6",
+    "commondir": "^1.0.1",
+    "debug": "^2.2.0",
+    "lodash": "^3.10.1",
+    "semver": "^5.2.0",
+    "toposort": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^4.1.8",
