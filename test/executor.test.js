@@ -1,3 +1,8 @@
+// Copyright IBM Corp. 2014,2016. All Rights Reserved.
+// Node module: loopback-boot
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
 var async = require('async');
 var boot = require('../');
 var path = require('path');
@@ -901,6 +906,62 @@ describe('executor', function() {
         if (err) return done(err);
         expect(app.booting).to.be.false();
         expect(process.bootFlags).to.not.have.property('barLoadedInTest');
+        done();
+      });
+    });
+  });
+
+  describe('when booting with lazy connect', function() {
+    var SAMPLE_INSTRUCTION = someInstructions({
+      dataSources: {
+        lazyConnector: {
+          connector: 'testLazyConnect',
+          name: 'lazyConnector',
+        },
+      },
+    });
+    var connectTriggered = true;
+
+    beforeEach(function() {
+      app.connector('testLazyConnect', {
+        initialize: function(dataSource, callback) {
+          if (dataSource.settings.lazyConnect) {
+            connectTriggered = false;
+          } else {
+            connectTriggered = true;
+          }
+        },
+      });
+    });
+
+    it('should trigger connect with ENV undefined', function(done) {
+      delete process.env.LB_LAZYCONNECT_DATASOURCES;
+      boot.execute(app, SAMPLE_INSTRUCTION, function() {
+        expect(connectTriggered).to.equal(true);
+        done();
+      });
+    });
+
+    it('should not trigger connect with ENV true', function(done) {
+      process.env.LB_LAZYCONNECT_DATASOURCES = 'true';
+      boot.execute(app, SAMPLE_INSTRUCTION, function() {
+        expect(connectTriggered).to.equal(false);
+        done();
+      });
+    });
+
+    it('should trigger connect with ENV false', function(done) {
+      process.env.LB_LAZYCONNECT_DATASOURCES = 'false';
+      boot.execute(app, SAMPLE_INSTRUCTION, function() {
+        expect(connectTriggered).to.equal(true);
+        done();
+      });
+    });
+
+    it('should trigger connect with ENV 0', function(done) {
+      process.env.LB_LAZYCONNECT_DATASOURCES = '0';
+      boot.execute(app, SAMPLE_INSTRUCTION, function() {
+        expect(connectTriggered).to.equal(true);
         done();
       });
     });
