@@ -6,7 +6,7 @@
 var async = require('async');
 var boot = require('../');
 var path = require('path');
-var loopback = require('loopback');
+var loopback = require('loopbacknext');
 var assert = require('assert');
 var expect = require('chai').expect;
 var fs = require('fs-extra');
@@ -238,10 +238,10 @@ describe('executor', function() {
     var builtinModel = {
       name: 'User',
       definition: fs.readJsonFileSync(
-        require.resolve('loopback/common/models/user.json')
+        require.resolve('loopbacknext/common/models/user.json')
       ),
       config: { dataSource: 'db' },
-      sourceFile: require.resolve('loopback/common/models/user.js'),
+      sourceFile: require.resolve('loopbacknext/common/models/user.js'),
     };
     builtinModel.definition.redefined = true;
 
@@ -789,7 +789,7 @@ describe('executor', function() {
       middleware: {
         middleware: [
           {
-            sourceFile: require.resolve('loopback'),
+            sourceFile: require.resolve('loopbacknext'),
             fragment: 'static',
             config: {
               phase: 'files',

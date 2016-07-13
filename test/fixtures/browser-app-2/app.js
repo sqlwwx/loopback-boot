@@ -3,7 +3,7 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-var loopback = require('loopback');
+var loopback = require('loopbacknext');
 var boot = require('../../../');
 
 var app = module.exports = loopback();

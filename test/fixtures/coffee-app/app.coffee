@@ -1,4 +1,4 @@
-loopback = require 'loopback'
+loopback = require 'loopbacknext'
 boot = require '../../../'
 
 module.exports = client = loopback()

@@ -916,8 +916,8 @@ describe('compiler', function() {
       var instructions = boot.compile({
         appRootDir: appdir.PATH,
         modelSources: [
-          'loopback/common/models',
-          'loopback/common/dir-does-not-exist',
+          'loopbacknext/common/models',
+          'loopbacknext/common/dir-does-not-exist',
         ],
       });
 
@@ -927,8 +927,8 @@ describe('compiler', function() {
         config: {
           dataSource: 'db',
         },
-        definition: require('loopback/common/models/user.json'),
-        sourceFile: require.resolve('loopback/common/models/user.js'),
+        definition: require('loopbacknext/common/models/user.json'),
+        sourceFile: require.resolve('loopbacknext/common/models/user.js'),
       });
     });
 
@@ -1582,23 +1582,23 @@ describe('compiler', function() {
     beforeEach(function() {
       fs.copySync(SIMPLE_APP, appdir.PATH);
       sourceFileForUrlNotFound = require.resolve(
-        'loopback/server/middleware/url-not-found');
+        'loopbacknext/server/middleware/url-not-found');
     });
 
     it('emits middleware instructions', function() {
-      testMiddlewareRegistration('loopback/server/middleware/url-not-found',
+      testMiddlewareRegistration('loopbacknext/server/middleware/url-not-found',
         sourceFileForUrlNotFound);
     });
 
     it('emits middleware instructions for fragment', function() {
-      testMiddlewareRegistration('loopback#url-not-found',
+      testMiddlewareRegistration('loopbacknext#url-not-found',
         sourceFileForUrlNotFound);
     });
 
     it('fails when a module middleware cannot be resolved', function() {
       appdir.writeConfigFileSync('middleware.json', {
         final: {
-          'loopback/path-does-not-exist': { },
+          'loopbacknext/path-does-not-exist': { },
         },
       });
 
@@ -1610,7 +1610,7 @@ describe('compiler', function() {
     function() {
       appdir.writeConfigFileSync('middleware.json', {
         final: {
-          'loopback/path-does-not-exist': {
+          'loopbacknext/path-does-not-exist': {
             optional: 'this middleware is optional',
           },
         },
@@ -1624,7 +1624,7 @@ describe('compiler', function() {
       function() {
         appdir.writeConfigFileSync('middleware.json', {
           final: {
-            'loopback#path-does-not-exist': { },
+            'loopbacknext#path-does-not-exist': { },
           },
         });
 
@@ -1638,7 +1638,7 @@ describe('compiler', function() {
       function() {
         appdir.writeConfigFileSync('middleware.json', {
           final: {
-            'loopback#path-does-not-exist': {
+            'loopbacknext#path-does-not-exist': {
               optional: 'this middleware is optional',
             },
           },
@@ -1910,7 +1910,7 @@ describe('compiler', function() {
         'initial:after': {
         },
         'custom:before': {
-          'loopback/server/middleware/url-not-found': {
+          'loopbacknext/server/middleware/url-not-found': {
             params: 'some-config-data',
           },
         },
@@ -1926,7 +1926,7 @@ describe('compiler', function() {
       expect(instructions.middleware.middleware, 'middleware')
         .to.eql([{
           sourceFile:
-            require.resolve('loopback/server/middleware/url-not-found'),
+            require.resolve('loopbacknext/server/middleware/url-not-found'),
           config: {
             phase: 'custom:before',
             params: 'some-config-data',
@@ -1973,14 +1973,14 @@ describe('compiler', function() {
     it('supports shorthand notation for middleware paths', function() {
       appdir.writeConfigFileSync('middleware.json', {
         'final': {
-          'loopback#url-not-found': {},
+          'loopbacknext#url-not-found': {},
         },
       });
 
       var instructions = boot.compile(appdir.PATH);
 
       expect(instructions.middleware.middleware[0].sourceFile)
-        .to.equal(require.resolve('loopback/server/middleware/url-not-found'));
+        .to.equal(require.resolve('loopbacknext/server/middleware/url-not-found'));
     });
 
     it('supports shorthand notation for relative paths', function() {
@@ -2005,7 +2005,7 @@ describe('compiler', function() {
       function() {
         appdir.writeConfigFileSync('middleware.json', {
           'final': {
-            'loopback#errorHandler': {},
+            'loopbacknext#errorHandler': {},
           },
         });
 
@@ -2013,7 +2013,7 @@ describe('compiler', function() {
 
         expect(instructions.middleware.middleware[0]).have.property(
           'sourceFile',
-          pathWithoutIndex(require.resolve('loopback')));
+          pathWithoutIndex(require.resolve('loopbacknext')));
         expect(instructions.middleware.middleware[0]).have.property(
           'fragment',
           'errorHandler');

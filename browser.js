@@ -24,7 +24,7 @@ var execute = require('./lib/executor');
 exports = module.exports = function bootBrowserApp(app, options) {
   // Only using options.id to identify the browserified bundle to load for
   // this application. If no Id was provided, load the default bundle.
-  var moduleName = 'loopback-boot#instructions';
+  var moduleName = 'loopback-bootnext#instructions';
   if (options && typeof options === 'object' && options.appId)
     moduleName += '-' + options.appId;
 
