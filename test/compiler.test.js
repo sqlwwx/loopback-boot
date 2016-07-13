@@ -1980,7 +1980,9 @@ describe('compiler', function() {
       var instructions = boot.compile(appdir.PATH);
 
       expect(instructions.middleware.middleware[0].sourceFile)
-        .to.equal(require.resolve('loopbacknext/server/middleware/url-not-found'));
+        .to.equal(require.resolve(
+          'loopbacknext/server/middleware/url-not-found'
+        ));
     });
 
     it('supports shorthand notation for relative paths', function() {
